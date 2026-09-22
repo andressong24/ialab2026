@@ -4,9 +4,13 @@ The app currently has no backend, database, authentication, or device
 persistence. The canonical prototype data lives in
 [`src/data/finance.ts`](../src/data/finance.ts).
 
-Screen owners should import from `@/data` and consult `financeData` (or its
-selectors) instead of creating screen-specific copies of categories, currency,
-reporting periods, merchants, or expenses.
+Screen owners should import from `@/data` and consult `financeRepository` (or
+`useFinanceData`) instead of creating screen-specific copies of categories,
+currency, reporting periods, merchants, or expenses.
+
+The repository exposes `getSnapshot`, `listExpenses`, `getExpense`,
+`createExpense`, `updateExpense`, `deleteExpense`, and `subscribe`. New screens
+should use these operations rather than mutating `financeData` directly.
 
 ## Expense shape
 
@@ -17,8 +21,11 @@ reporting periods, merchants, or expenses.
 - `entryMode`: `manual` or `receipt`.
 - `id`: stable identifier for a transaction.
 
-This module is a read-only in-memory fixture for UI development. The Add
-expense screen must not describe an action as persisted until a repository
-implementation is connected. When persistence is introduced, keep this
-domain shape and replace the fixture behind a shared repository/service so
-screens do not change their data contract.
+The default `financeRepository` is an in-memory, session-only implementation
+for UI development. Writes are visible to every screen using the shared
+repository during the current app session, but they are lost on reload and are
+not shared across devices. The Add expense screen must not describe an action
+as durably persisted until a persistent repository implementation is connected.
+When persistence is introduced, keep this domain shape and replace the
+in-memory adapter behind the same repository interface so screens do not
+change their data contract.

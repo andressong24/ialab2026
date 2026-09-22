@@ -198,4 +198,4 @@ Budget setup status in docs/screens.md. Report remaining service work.
 
 New storage, authentication, shared financial state, and service integrations should have agreed contracts before multiple screen owners depend on them. Never commit credentials or real customer financial data.
 
-The current prototype data contract is documented in [docs/data-contract.md](docs/data-contract.md) and implemented in [src/data/finance.ts](src/data/finance.ts). It is an in-memory fixture, not shared runtime storage or persistence.
+The current prototype data contract is documented in [docs/data-contract.md](docs/data-contract.md), defined in [src/data/finance.ts](src/data/finance.ts), and accessed through the session-only repository in [src/data/financeRepository.ts](src/data/financeRepository.ts). It is not durable storage or cross-device synchronization.

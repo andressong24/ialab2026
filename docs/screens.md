@@ -48,7 +48,7 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Acceptance:** Required fields and invalid amounts are validated; the keyboard does not cover focused inputs or actions; category/date selection is usable on both platforms; Receipt review navigation works; submission cannot claim to save data without a defined destination and storage contract.
 
-**Dependencies to agree:** Use the shared transaction/category schema in [docs/data-contract.md](data-contract.md) for prototype UI. A persistent storage repository, currency/date handling, and receipt-capture handoff still need to be connected.
+**Dependencies to agree:** Use the shared transaction/category schema and session repository in [docs/data-contract.md](data-contract.md) for prototype UI. Durable storage, cross-device synchronization, currency/date handling, and receipt-capture handoff still need to be connected.
 
 ## Split budget
 
