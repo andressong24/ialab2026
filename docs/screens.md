@@ -2,14 +2,14 @@
 
 The feature folders below are independent units of work. Assign one owner to each folder; coordinate shared contracts before connecting data across screens. All routes already exist. Replace a feature's placeholder while preserving its screen export and route.
 
-The six-step Welcome flow is implemented. The other routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or data persistence exist.
+The six-step Welcome flow and Home dashboard are implemented. The remaining routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or durable data persistence exist.
 
 Designs: [welcome reference](design/welcome-reference.png) and [screen overview](design/screen-overview-reference.png). Each teammate can use these local images in their coding session.
 
 | Screen | Route | Owner's folder | Screen export | Status |
 | --- | --- | --- | --- | --- |
 | Welcome flow | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
-| Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Placeholder |
+| Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Implemented |
 | Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
@@ -22,13 +22,17 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Reference:** The supplied six-step mobile onboarding designs.
 
-**Implemented scope:** Intro screen, selectable financial priorities, local income and pay-frequency inputs, editable recurring expenses, starter allocations, and setup-complete review. The final “Open my dashboard” CTA is intentionally presentational until the dashboard handoff is implemented.
+**Implemented scope:** Intro screen, selectable financial priorities, local income and pay-frequency inputs, editable recurring expenses, starter allocations, setup-complete review, and a handoff to the Home dashboard. The flow uses the session-only FinanceStore; it does not persist onboarding data to the device or a backend.
 
 **Reference checks:** Content stays readable and scrollable on compact displays and with larger system text; priority, income, frequency, and expense controls are locally interactive; back and continue actions move through all six steps; edits use the session-only FinanceStore and no backend or device persistence is used.
 
 ## Home dashboard
 
 **Scope:** Monthly income, spending and remaining balance, earnings trend, expense/receipt entry actions, and budget category progress from the supplied Home dashboard design.
+
+**Implemented in this pass:** Responsive dashboard summary derived from the shared session finance repository, including income/spend/remaining totals, expense and receipt quick actions, and category progress bars with accessible progress values. The monthly income displayed on the dashboard is supplied by the onboarding FinanceStore.
+
+**Remaining:** Earnings trend visualization and durable persistence behind the shared data contract.
 
 **Acceptance:** Clearly labeled sample data; consistent currency formatting; category progress matches displayed amounts; charts have a readable text summary; actions reach Add expense and Receipt review or an explicitly scoped capture step. Empty and unavailable data states are handled when a data contract exists.
 

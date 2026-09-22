@@ -1,4 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import {
@@ -15,6 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/ui/Button';
+import { routes } from '@/navigation/routes';
 import type { OnboardingExpense, OnboardingPriorityId, PayFrequency } from '@/state';
 import { useFinanceStore } from '@/state';
 import { theme } from '@/theme/tokens';
@@ -534,10 +536,12 @@ function CompleteStep({
   incomeCents,
   expenses,
   onBack,
+  onContinue,
 }: {
   incomeCents: number;
   expenses: readonly OnboardingExpense[];
   onBack: () => void;
+  onContinue: () => void;
 }) {
   const essentialsCents = expenses.reduce((sum, expense) => sum + expense.amountCents, 0);
   const plannedCents = essentialsCents + 74_000 + 55_000 + 65_000;
@@ -547,9 +551,9 @@ function CompleteStep({
     <StepLayout
       step={6}
       onBack={onBack}
-      onContinue={() => undefined}
+      onContinue={onContinue}
       continueLabel="Open my dashboard"
-      continueHint="Dashboard navigation will be connected in a later phase">
+      continueHint="Opens your home dashboard">
       <View style={styles.stepCopy}>
         <Text accessibilityRole="header" style={styles.stepTitle}>Your plan is ready, Maya</Text>
         <Text style={styles.stepDescription}>A clear starting point based on your income, essentials, and priorities.</Text>
@@ -588,6 +592,7 @@ function Metric({ label, value, valueColor = theme.colors.text }: { label: strin
 }
 
 export function WelcomeScreen() {
+  const router = useRouter();
   const { state, actions } = useFinanceStore();
   const [step, setStep] = useState<Step>(1);
   const [incomeInput, setIncomeInput] = useState(() => formatInputCents(state.onboarding.monthlyIncomeCents));
@@ -639,7 +644,14 @@ export function WelcomeScreen() {
   if (step === 5) {
     return <AllocationsStep incomeCents={state.onboarding.monthlyIncomeCents} expenses={state.onboarding.recurringExpenses} onBack={goBack} onContinue={() => setStep(6)} />;
   }
-  return <CompleteStep incomeCents={state.onboarding.monthlyIncomeCents} expenses={state.onboarding.recurringExpenses} onBack={goBack} />;
+  return (
+    <CompleteStep
+      incomeCents={state.onboarding.monthlyIncomeCents}
+      expenses={state.onboarding.recurringExpenses}
+      onBack={goBack}
+      onContinue={() => router.replace(routes.home)}
+    />
+  );
 }
 
 const styles = StyleSheet.create({

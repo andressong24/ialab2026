@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
 describe('app navigation', () => {
-  it('walks through the six-step welcome flow without leaving the welcome route', async () => {
+  it('walks through the six-step welcome flow and opens the dashboard', async () => {
     const app = renderRouter('./src/app', { initialUrl: '/' });
     await app;
 
@@ -24,8 +24,8 @@ describe('app navigation', () => {
     expect(screen.getByRole('header', { name: 'Your plan is ready, Maya' })).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Open my dashboard' }));
-    expect(app.getPathname()).toBe('/');
-    expect(screen.getByRole('header', { name: 'Your plan is ready, Maya' })).toBeOnTheScreen();
+    expect(app.getPathname()).toBe('/home');
+    expect(screen.getByRole('header', { name: 'Home dashboard' })).toBeOnTheScreen();
   });
 
   it('connects every main tab to its feature screen', async () => {
