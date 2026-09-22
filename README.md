@@ -2,7 +2,7 @@
 
 A React Native app built with Expo, TypeScript, and Expo Router for iOS and Android. The web target provides a convenient way to preview screens during development.
 
-The **Take Control of Your Finances** welcome screen is the implemented reference screen. The other screens have working routes and clearly marked placeholders so teammates can build them independently. **Get Started** opens Budget setup.
+The **Take Control of Your Finances** welcome screen and the Budget setup prototype are implemented reference screens. The other screens have working routes and clearly marked placeholders so teammates can build them independently. **Get Started** opens Budget setup.
 
 This project currently contains UI and navigation only. Authentication, storage, bank connections, receipt scanning, AI, and report exports are not implemented. Treat any future sample balances or transactions as demo data until real services are connected.
 
@@ -83,7 +83,7 @@ AGENTS.md                      Instructions for coding agents
 | --- | --- | --- | --- | --- |
 | Welcome | `/` | `routes.welcome` | `welcome` | Implemented |
 | Home dashboard | `/home` | `routes.home` | `home` | Placeholder |
-| Budget setup | `/budget` | `routes.budget` | `budget` | Placeholder |
+| Budget setup | `/budget` | `routes.budget` | `budget` | Implemented (prototype) |
 | Goal planner | `/goals` | `routes.goals` | `goals` | Placeholder |
 | AI insights | `/insights` | `routes.insights` | `insights` | Placeholder |
 | Monthly report | `/reports` | `routes.reports` | `reports` | Placeholder |

@@ -10,7 +10,7 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | --- | --- | --- | --- | --- |
 | Welcome | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
 | Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Placeholder |
-| Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
+| Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Implemented (prototype) |
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
 | Goal planner | `/goals` | `src/features/goals` | `GoalsScreen` | Placeholder |
@@ -37,6 +37,8 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 ## Budget setup
 
 **Scope:** Monthly income input, percentage or fixed-amount allocation, allocated/unallocated summary, category progress, category editing, and Save budget action.
+
+**Implemented:** Responsive budget setup surface with editable prototype income and allocations, percentage/fixed-amount mode switching, reconciled allocation summary, category progress, monthly reports navigation, and explicit preview-only save feedback.
 
 **Acceptance:** Numeric input and validation work across mobile keyboards; allocation totals reconcile with income; over-allocation is visible and handled; allocation mode changes have defined behavior; the save action accurately describes whether data is local, persisted, or still a prototype. This is the destination of Welcome's Get Started action.
 
