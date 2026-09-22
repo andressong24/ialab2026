@@ -35,6 +35,8 @@ export interface Expense {
   readonly occurredOn: string;
   readonly categoryId: ExpenseCategoryId;
   readonly notes?: string;
+  /** Local URI for the selected receipt image while the prototype is open. */
+  readonly receiptUri?: string;
   readonly entryMode: ExpenseEntryMode;
 }
 

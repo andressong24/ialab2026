@@ -14,7 +14,7 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
 | Goal planner | `/goals` | `src/features/goals` | `GoalsScreen` | Placeholder |
-| AI receipt review | `/expenses/receipt-review` | `src/features/receipt-review` | `ReceiptReviewScreen` | Placeholder |
+| AI receipt review | `/expenses/receipt-review` | `src/features/receipt-review` | `ReceiptReviewScreen` | Implemented (demo review) |
 | AI insights | `/insights` | `src/features/insights` | `InsightsScreen` | Placeholder |
 | Monthly report | `/reports` | `src/features/reports` | `ReportsScreen` | Placeholder |
 
@@ -70,7 +70,9 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Scope:** Receipt image preview, extraction status, editable merchant/date/amount/category/notes, confidence presentation, and review/confirmation actions.
 
-**Acceptance:** A sample extraction is explicitly labeled as demo data; all extracted fields can be corrected; missing or failed extraction has a useful state; category confidence does not imply certainty; confirming a receipt has a defined handoff to expense entry or storage.
+**Implemented scope:** Receipt image upload with an empty state and compact selected-image thumbnail, extraction-complete state, editable merchant/date/amount/notes fields, a category select loaded from the shared finance contract, validation, session-store confirmation, and an honest non-persistent status message.
+
+**Acceptance:** A sample extraction is explicitly labeled as demo data; the selected receipt image and all extracted fields can be corrected; date and USD amount inputs are validated; category confidence does not imply certainty; confirmation adds a receipt-mode expense to the shared in-memory store and clearly states that it is not persisted.
 
 **Dependencies to agree:** Camera/library permissions, image ownership, extraction service and response schema, validation, and expense handoff. No scanning or AI service is wired in the scaffold.
 
