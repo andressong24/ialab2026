@@ -42,16 +42,44 @@ describe('app navigation', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Add an expense' }));
     expect(app.getPathname()).toBe('/expenses/new');
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Explore receipt review' }));
+    await fireEvent.changeText(screen.getByDisplayValue('Green Market'), 'Edited market');
+    expect(screen.getByDisplayValue('Edited market')).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Open sample receipt review' }));
     expect(app.getPathname()).toBe('/expenses/receipt-review');
     expect(screen.getByRole('header', { name: 'AI receipt review' })).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Go back' }));
     expect(app.getPathname()).toBe('/expenses/new');
+    expect(screen.getByDisplayValue('Edited market')).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Go back' }));
     expect(app.getPathname()).toBe('/home');
     expect(screen.getByRole('header', { name: 'Home dashboard' })).toBeOnTheScreen();
+  });
+
+  it('returns home with an expense-saved toast after a valid save', async () => {
+    const app = renderRouter('./src/app', { initialUrl: '/expenses/new' });
+    await app;
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Save expense' }));
+    expect(app.getPathname()).toBe('/home');
+    expect(screen.getByRole('alert', { name: 'Expense saved' })).toBeOnTheScreen();
+  });
+
+  it('supports editing and cancelling a date selection', async () => {
+    const app = renderRouter('./src/app', { initialUrl: '/expenses/new' });
+    await app;
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Date, Sep 22, 2026' }));
+    await fireEvent.changeText(screen.getByDisplayValue('2026-09-22'), '2026-10-03');
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel date selection' }));
+    expect(screen.getByRole('button', { name: 'Date, Sep 22, 2026' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Date, Sep 22, 2026' }));
+    await fireEvent.changeText(screen.getByDisplayValue('2026-09-22'), '2026-10-03');
+    await fireEvent.press(screen.getByRole('button', { name: 'Apply date selection' }));
+    expect(screen.getByRole('button', { name: 'Date, Oct 3, 2026' })).toBeOnTheScreen();
   });
 
   it('opens the shared-expense flow from reports', async () => {
@@ -65,7 +93,7 @@ describe('app navigation', () => {
   });
 
   it.each([
-    { path: '/expenses/new', heading: 'KEEP TRACK OF THE EVERYDAY' },
+    { path: '/expenses/new', heading: 'Add expense' },
     { path: '/expenses/receipt-review', heading: 'CHECK THE DETAILS' },
     { path: '/split-budget', heading: 'SHARE THE COST' },
   ])('supports direct entry and a home fallback for $path', async ({ path, heading }) => {

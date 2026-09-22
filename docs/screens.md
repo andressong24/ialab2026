@@ -2,7 +2,7 @@
 
 The feature folders below are independent units of work. Assign one owner to each folder; coordinate shared contracts before connecting data across screens. All routes already exist. Replace a feature's placeholder while preserving its screen export and route.
 
-Only Welcome is implemented. The other routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or data persistence exist.
+Welcome and Add expense are implemented as prototype UI. The other routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or data persistence exist.
 
 Designs: [welcome reference](design/welcome-reference.png) and [screen overview](design/screen-overview-reference.png). Each teammate can use these local images in their coding session.
 
@@ -11,7 +11,7 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | Welcome | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
 | Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Placeholder |
 | Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
-| Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
+| Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Implemented (prototype UI; no persistence or receipt service) |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
 | Goal planner | `/goals` | `src/features/goals` | `GoalsScreen` | Placeholder |
 | AI receipt review | `/expenses/receipt-review` | `src/features/receipt-review` | `ReceiptReviewScreen` | Placeholder |
@@ -46,9 +46,13 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Scope:** Amount, merchant, date, category, notes, receipt entry action, entry mode, and Save expense action.
 
+**Implemented:** Responsive manual-entry form with a receipt-review card at the top, dependency-free date/category disclosures, field validation, keyboard-aware scrolling, and navigation home with an `Expense saved` toast after a valid save.
+
 **Acceptance:** Required fields and invalid amounts are validated; the keyboard does not cover focused inputs or actions; category/date selection is usable on both platforms; Receipt review navigation works; submission cannot claim to save data without a defined destination and storage contract.
 
 **Dependencies to agree:** Use the shared transaction/category schema and session repository in [docs/data-contract.md](data-contract.md) for prototype UI. Durable storage, cross-device synchronization, currency/date handling, and receipt-capture handoff still need to be connected.
+
+**Remaining service work:** Connect a persistence repository and real receipt capture/extraction before treating the save toast as durable transaction confirmation or the receipt action as a real upload.
 
 ## Split budget
 
