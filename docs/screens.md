@@ -9,7 +9,7 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | Screen | Route | Owner's folder | Screen export | Status |
 | --- | --- | --- | --- | --- |
 | Welcome | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
-| Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Placeholder |
+| Home dashboard | `/home` | `src/features/home` | `HomeScreen` | In progress |
 | Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
@@ -29,6 +29,10 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 ## Home dashboard
 
 **Scope:** Monthly income, spending and remaining balance, earnings trend, expense/receipt entry actions, and budget category progress from the supplied Home dashboard design.
+
+**Implemented in this pass:** Responsive dashboard summary derived from the shared September finance fixture, including income/spend/remaining totals, expense and receipt quick actions, and category progress bars with accessible progress values.
+
+**Remaining:** Earnings trend visualization and a persistent repository/service behind the shared data contract.
 
 **Acceptance:** Clearly labeled sample data; consistent currency formatting; category progress matches displayed amounts; charts have a readable text summary; actions reach Add expense and Receipt review or an explicitly scoped capture step. Empty and unavailable data states are handled when a data contract exists.
 
