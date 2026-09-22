@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "IA Lab Finance",
+    "slug": "ialab-finance",
+    "version": "0.1.0",
+    "scheme": "ialabfinance",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": { "supportsTablet": true },
+    "android": { "predictiveBackGestureEnabled": true },
+    "web": { "output": "static", "name": "IA Lab Finance" },
+    "plugins": [
+      "expo-router",
+      ["expo-splash-screen", { "backgroundColor": "#7057FF" }]
+    ],
+    "experiments": { "typedRoutes": true }
+  }
+}
