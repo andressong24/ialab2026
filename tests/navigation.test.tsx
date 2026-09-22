@@ -60,9 +60,21 @@ describe('app navigation', () => {
 
     await fireEvent.press(screen.getByRole('button', { name: 'Open sample receipt review' }));
     expect(app.getPathname()).toBe('/expenses/receipt-review');
-    expect(screen.getByRole('header', { name: 'AI receipt review' })).toBeOnTheScreen();
+    expect(screen.getByRole('header', { name: 'Review receipt' })).toBeOnTheScreen();
+    expect(screen.getByDisplayValue('Green Market')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Merchant'), 'Fresh Market');
+    expect(screen.getByDisplayValue('Fresh Market')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Amount (USD)'), 'abc12.345xyz');
+    expect(screen.getByDisplayValue('$12.34')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Amount (USD)'), '12');
+    expect(screen.getByDisplayValue('$12')).toBeOnTheScreen();
+    await fireEvent(screen.getByLabelText('Amount (USD)'), 'blur');
+    expect(screen.getByDisplayValue('$12.00')).toBeOnTheScreen();
+    await fireEvent(screen.getByLabelText('Expense category'), 'valueChange', 'transportation');
+    await fireEvent.press(screen.getByRole('button', { name: 'Confirm expense' }));
+    expect(screen.getByText('Expense sent to the shared store: Fresh Market · $12.00 USD · Transportation · 2026-09-22.')).toBeOnTheScreen();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Go back' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel' }));
     expect(app.getPathname()).toBe('/expenses/new');
     expect(screen.getByDisplayValue('Edited market')).toBeOnTheScreen();
 
