@@ -4,6 +4,11 @@ The app currently has no backend, database, authentication, or device
 persistence. The canonical prototype data lives in
 [`src/data/finance.ts`](../src/data/finance.ts).
 
+The session-only onboarding state lives in
+[`src/state/FinanceStore.tsx`](../src/state/FinanceStore.tsx). It holds
+onboarding edits while the app is running and resets on reload or app
+restart. It is intentionally not a persistence layer.
+
 Screen owners should import from `@/data` and consult `financeRepository` (or
 `useFinanceData`) instead of creating screen-specific copies of categories,
 currency, reporting periods, merchants, or expenses.
