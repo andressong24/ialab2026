@@ -2,7 +2,7 @@
 
 The feature folders below are independent units of work. Assign one owner to each folder; coordinate shared contracts before connecting data across screens. All routes already exist. Replace a feature's placeholder while preserving its screen export and route.
 
-The six-step Welcome flow, Home dashboard, and Add expense prototype are implemented. The remaining routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or durable data persistence exist.
+The six-step Welcome flow, Home dashboard, Add expense prototype, and Budget setup prototype are implemented. The remaining routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or durable data persistence exist.
 
 Designs: [welcome reference](design/welcome-reference.png) and [screen overview](design/screen-overview-reference.png). Each teammate can use these local images in their coding session.
 
@@ -10,8 +10,8 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | --- | --- | --- | --- | --- |
 | Welcome flow | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
 | Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Implemented |
-| Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Implemented (prototype UI; no persistence or receipt service) |
+| Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Implemented (prototype) |
 | Split budget | `/split-budget` | `src/features/split-budget` | `SplitBudgetScreen` | Placeholder |
 | Goal planner | `/goals` | `src/features/goals` | `GoalsScreen` | Placeholder |
 | AI receipt review | `/expenses/receipt-review` | `src/features/receipt-review` | `ReceiptReviewScreen` | Implemented (demo review) |
@@ -42,9 +42,11 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Scope:** Monthly income input, percentage or fixed-amount allocation, allocated/unallocated summary, category progress, category editing, and Save budget action.
 
-**Acceptance:** Numeric input and validation work across mobile keyboards; allocation totals reconcile with income; over-allocation is visible and handled; allocation mode changes have defined behavior; the save action accurately describes whether data is local, persisted, or still a prototype. This remains a separate tab placeholder from the onboarding flow.
+**Implemented:** Responsive budget setup surface with editable prototype income and allocations, percentage/fixed-amount mode switching, reconciled allocation summary, category progress, monthly reports navigation, and explicit preview-only save feedback.
 
-**Dependencies to agree:** Budget/category schema, allocation units, rounding, persistence, and completion destination. The `/budget` tab remains a separate placeholder until that screen is assigned.
+**Acceptance:** Numeric input and validation work across mobile keyboards; allocation totals reconcile with income; over-allocation is visible and handled; allocation mode changes have defined behavior; the save action accurately describes whether data is local, persisted, or still a prototype. This is the destination of Welcome's Get Started action.
+
+**Dependencies to agree:** Budget/category schema, allocation units, rounding, persistence, and completion destination. The current implementation uses the session-only prototype finance data and does not persist changes.
 
 ## Add expense
 

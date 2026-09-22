@@ -2,7 +2,7 @@
 
 A React Native app built with Expo, TypeScript, and Expo Router for iOS and Android. The web target provides a convenient way to preview screens during development.
 
-The six-step finance setup flow, Home dashboard, and Add expense prototype are implemented with explicit demo data. The remaining screens have working routes and clearly marked placeholders so teammates can build them independently. Completing setup opens the Home dashboard.
+The six-step finance setup flow, Home dashboard, Add expense prototype, and Budget setup prototype are implemented with explicit demo data. The remaining screens have working routes and clearly marked placeholders so teammates can build them independently. Completing setup opens the Home dashboard, while Welcome's **Get Started** action opens Budget setup.
 
 This project contains UI, navigation, and session-only client state. Authentication, device persistence, bank connections, receipt scanning, AI, and report exports are not implemented. Treat sample balances or transactions as demo data until real services are connected.
 
@@ -64,7 +64,7 @@ src/
     insights/
     reports/
     expenses/
-    receipt-review/            
+    receipt-review/
     split-budget/
   data/                        Shared finance data contract and prototype fixture
   state/                       Session-only FinanceStore provider and reducer
@@ -84,7 +84,7 @@ AGENTS.md                      Instructions for coding agents
 | --- | --- | --- | --- | --- |
 | Welcome flow | `/` | `routes.welcome` | `welcome` | Implemented |
 | Home dashboard | `/home` | `routes.home` | `home` | Implemented |
-| Budget setup | `/budget` | `routes.budget` | `budget` | Placeholder |
+| Budget setup | `/budget` | `routes.budget` | `budget` | Implemented (prototype) |
 | Goal planner | `/goals` | `routes.goals` | `goals` | Placeholder |
 | AI insights | `/insights` | `routes.insights` | `insights` | Placeholder |
 | Monthly report | `/reports` | `routes.reports` | `reports` | Placeholder |
