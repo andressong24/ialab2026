@@ -66,6 +66,7 @@ src/
     expenses/
     receipt-review/
     split-budget/
+  data/                        Shared finance data contract and prototype fixture
   components/ui/               Shared Button, Screen, and ScreenPlaceholder
   navigation/routes.ts        Named, typed route destinations
   theme/tokens.ts              Shared colors, spacing, and other design tokens
@@ -196,3 +197,5 @@ Budget setup status in docs/screens.md. Report remaining service work.
 ```
 
 New storage, authentication, shared financial state, and service integrations should have agreed contracts before multiple screen owners depend on them. Never commit credentials or real customer financial data.
+
+The current prototype data contract is documented in [docs/data-contract.md](docs/data-contract.md) and implemented in [src/data/finance.ts](src/data/finance.ts). It is an in-memory fixture, not shared runtime storage or persistence.
