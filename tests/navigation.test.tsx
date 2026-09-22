@@ -3,16 +3,29 @@ import { router } from 'expo-router';
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
 describe('app navigation', () => {
-  it('opens budget setup from the welcome action', async () => {
-    // Router helpers stay on the original return value when the async render resolves.
+  it('walks through the six-step welcome flow without leaving the welcome route', async () => {
     const app = renderRouter('./src/app', { initialUrl: '/' });
     await app;
 
-    expect(screen.getByRole('header', { name: /Take Control of Your/ })).toBeOnTheScreen();
-    await fireEvent.press(screen.getByRole('button', { name: 'Get Started' }));
+    expect(screen.getByRole('header', { name: /A calmer way to manage your/ })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Get started' }));
+    expect(screen.getByRole('header', { name: 'What matters most right now?' })).toBeOnTheScreen();
 
-    expect(app.getPathname()).toBe('/budget');
-    expect(screen.getByRole('header', { name: 'Budget setup' })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Start with your take-home income' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Add your monthly essentials' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Give every dollar a job' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Review my plan' }));
+    expect(screen.getByRole('header', { name: 'Your plan is ready, Maya' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Open my dashboard' }));
+    expect(app.getPathname()).toBe('/');
+    expect(screen.getByRole('header', { name: 'Your plan is ready, Maya' })).toBeOnTheScreen();
   });
 
   it('connects every main tab to its feature screen', async () => {

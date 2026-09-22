@@ -2,9 +2,9 @@
 
 A React Native app built with Expo, TypeScript, and Expo Router for iOS and Android. The web target provides a convenient way to preview screens during development.
 
-The **Take Control of Your Finances** welcome screen is the implemented reference screen. The other screens have working routes and clearly marked placeholders so teammates can build them independently. **Get Started** opens Budget setup.
+The six-step finance setup flow is the implemented welcome experience. The other screens have working routes and clearly marked placeholders so teammates can build them independently. The final setup CTA is intentionally not connected to the dashboard yet.
 
-This project currently contains UI and navigation only. Authentication, storage, bank connections, receipt scanning, AI, and report exports are not implemented. Treat any future sample balances or transactions as demo data until real services are connected.
+This project contains UI, navigation, and session-only client state. Authentication, device persistence, bank connections, receipt scanning, AI, and report exports are not implemented. Treat sample balances or transactions as demo data until real services are connected.
 
 ## Run locally
 
@@ -67,6 +67,7 @@ src/
     receipt-review/
     split-budget/
   data/                        Shared finance data contract and prototype fixture
+  state/                       Session-only FinanceStore provider and reducer
   components/ui/               Shared Button, Screen, and ScreenPlaceholder
   navigation/routes.ts        Named, typed route destinations
   theme/tokens.ts              Shared colors, spacing, and other design tokens
@@ -81,7 +82,7 @@ AGENTS.md                      Instructions for coding agents
 
 | Screen | URL | Route constant | Feature folder | Status |
 | --- | --- | --- | --- | --- |
-| Welcome | `/` | `routes.welcome` | `welcome` | Implemented |
+| Welcome flow | `/` | `routes.welcome` | `welcome` | Implemented |
 | Home dashboard | `/home` | `routes.home` | `home` | Placeholder |
 | Budget setup | `/budget` | `routes.budget` | `budget` | Placeholder |
 | Goal planner | `/goals` | `routes.goals` | `goals` | Placeholder |
@@ -126,7 +127,7 @@ Most teammates can begin without modifying routing:
 6. Run `npm run check`, then open the screen and verify small-screen scrolling, large text, safe areas, and navigation. Verify iOS and Android behavior when those runtimes are available.
 7. Update the screen's status in `docs/screens.md` with what is implemented and what still requires a service.
 
-The welcome screen demonstrates implementation conventions. Other screens should follow their own supplied designs rather than copying the welcome screen's gradient everywhere.
+The welcome flow demonstrates implementation conventions. Other screens should follow their own supplied designs rather than copying the onboarding layout everywhere.
 
 ## Add a new screen
 
@@ -198,4 +199,4 @@ Budget setup status in docs/screens.md. Report remaining service work.
 
 New storage, authentication, shared financial state, and service integrations should have agreed contracts before multiple screen owners depend on them. Never commit credentials or real customer financial data.
 
-The current prototype data contract is documented in [docs/data-contract.md](docs/data-contract.md) and implemented in [src/data/finance.ts](src/data/finance.ts). It is an in-memory fixture, not shared runtime storage or persistence.
+The current prototype data contract is documented in [docs/data-contract.md](docs/data-contract.md) and implemented in [src/data/finance.ts](src/data/finance.ts). The session-only runtime store lives in [src/state/FinanceStore.tsx](src/state/FinanceStore.tsx); it resets on reload or app restart and does not replace a future persistence repository.

@@ -2,13 +2,13 @@
 
 The feature folders below are independent units of work. Assign one owner to each folder; coordinate shared contracts before connecting data across screens. All routes already exist. Replace a feature's placeholder while preserving its screen export and route.
 
-Only Welcome is implemented. The other routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or data persistence exist.
+The six-step Welcome flow is implemented. The other routes are navigation scaffolding with visible placeholders. The scopes and acceptance checks below describe the next implementation work; they do not imply that financial services or data persistence exist.
 
 Designs: [welcome reference](design/welcome-reference.png) and [screen overview](design/screen-overview-reference.png). Each teammate can use these local images in their coding session.
 
 | Screen | Route | Owner's folder | Screen export | Status |
 | --- | --- | --- | --- | --- |
-| Welcome | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
+| Welcome flow | `/` | `src/features/welcome` | `WelcomeScreen` | Implemented |
 | Home dashboard | `/home` | `src/features/home` | `HomeScreen` | Placeholder |
 | Budget setup | `/budget` | `src/features/budget` | `BudgetScreen` | Placeholder |
 | Add expense | `/expenses/new` | `src/features/expenses` | `AddExpenseScreen` | Placeholder |
@@ -18,13 +18,13 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 | AI insights | `/insights` | `src/features/insights` | `InsightsScreen` | Placeholder |
 | Monthly report | `/reports` | `src/features/reports` | `ReportsScreen` | Placeholder |
 
-## Welcome
+## Welcome flow
 
-**Reference:** The “Take Control of Your Finances” screen.
+**Reference:** The supplied six-step mobile onboarding designs.
 
-**Implemented scope:** Purple gradient, decorative shapes, diamond artwork, headline and description, five benefit rows, Get Started action, and setup-time caption. Get Started opens `/budget`.
+**Implemented scope:** Intro screen, selectable financial priorities, local income and pay-frequency inputs, editable recurring expenses, starter allocations, and setup-complete review. The final “Open my dashboard” CTA is intentionally presentational until the dashboard handoff is implemented.
 
-**Reference checks:** Content stays readable and scrollable on compact displays and with larger system text; decoration does not block interaction; the primary action has an accessible label and reaches Budget setup.
+**Reference checks:** Content stays readable and scrollable on compact displays and with larger system text; priority, income, frequency, and expense controls are locally interactive; back and continue actions move through all six steps; edits use the session-only FinanceStore and no backend or device persistence is used.
 
 ## Home dashboard
 
@@ -38,9 +38,9 @@ Designs: [welcome reference](design/welcome-reference.png) and [screen overview]
 
 **Scope:** Monthly income input, percentage or fixed-amount allocation, allocated/unallocated summary, category progress, category editing, and Save budget action.
 
-**Acceptance:** Numeric input and validation work across mobile keyboards; allocation totals reconcile with income; over-allocation is visible and handled; allocation mode changes have defined behavior; the save action accurately describes whether data is local, persisted, or still a prototype. This is the destination of Welcome's Get Started action.
+**Acceptance:** Numeric input and validation work across mobile keyboards; allocation totals reconcile with income; over-allocation is visible and handled; allocation mode changes have defined behavior; the save action accurately describes whether data is local, persisted, or still a prototype. This remains a separate tab placeholder from the onboarding flow.
 
-**Dependencies to agree:** Budget/category schema, allocation units, rounding, persistence, and completion destination.
+**Dependencies to agree:** Budget/category schema, allocation units, rounding, persistence, and completion destination. The `/budget` tab remains a separate placeholder until that screen is assigned.
 
 ## Add expense
 
