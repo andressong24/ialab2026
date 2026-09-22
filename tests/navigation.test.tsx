@@ -3,16 +3,29 @@ import { router } from 'expo-router';
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
 describe('app navigation', () => {
-  it('opens budget setup from the welcome action', async () => {
-    // Router helpers stay on the original return value when the async render resolves.
+  it('walks through the six-step welcome flow and opens the dashboard', async () => {
     const app = renderRouter('./src/app', { initialUrl: '/' });
     await app;
 
-    expect(screen.getByRole('header', { name: /Take Control of Your/ })).toBeOnTheScreen();
-    await fireEvent.press(screen.getByRole('button', { name: 'Get Started' }));
+    expect(screen.getByRole('header', { name: /A calmer way to manage your/ })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Get started' }));
+    expect(screen.getByRole('header', { name: 'What matters most right now?' })).toBeOnTheScreen();
 
-    expect(app.getPathname()).toBe('/budget');
-    expect(screen.getByRole('header', { name: 'Budget setup' })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Start with your take-home income' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Add your monthly essentials' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('header', { name: 'Give every dollar a job' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Review my plan' }));
+    expect(screen.getByRole('header', { name: 'Your plan is ready, Maya' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Open my dashboard' }));
+    expect(app.getPathname()).toBe('/home');
+    expect(screen.getByRole('header', { name: 'Home dashboard' })).toBeOnTheScreen();
   });
 
   it('connects every main tab to its feature screen', async () => {
@@ -42,16 +55,56 @@ describe('app navigation', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Add an expense' }));
     expect(app.getPathname()).toBe('/expenses/new');
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Explore receipt review' }));
-    expect(app.getPathname()).toBe('/expenses/receipt-review');
-    expect(screen.getByRole('header', { name: 'AI receipt review' })).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByDisplayValue('Green Market'), 'Edited market');
+    expect(screen.getByDisplayValue('Edited market')).toBeOnTheScreen();
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Go back' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Open sample receipt review' }));
+    expect(app.getPathname()).toBe('/expenses/receipt-review');
+    expect(screen.getByRole('header', { name: 'Review receipt' })).toBeOnTheScreen();
+    expect(screen.getByDisplayValue('Green Market')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Merchant'), 'Fresh Market');
+    expect(screen.getByDisplayValue('Fresh Market')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Amount (USD)'), 'abc12.345xyz');
+    expect(screen.getByDisplayValue('$12.34')).toBeOnTheScreen();
+    await fireEvent.changeText(screen.getByLabelText('Amount (USD)'), '12');
+    expect(screen.getByDisplayValue('$12')).toBeOnTheScreen();
+    await fireEvent(screen.getByLabelText('Amount (USD)'), 'blur');
+    expect(screen.getByDisplayValue('$12.00')).toBeOnTheScreen();
+    await fireEvent(screen.getByLabelText('Expense category'), 'valueChange', 'transportation');
+    await fireEvent.press(screen.getByRole('button', { name: 'Confirm expense' }));
+    expect(screen.getByText('Expense sent to the shared store: Fresh Market · $12.00 USD · Transportation · 2026-09-22.')).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel' }));
     expect(app.getPathname()).toBe('/expenses/new');
+    expect(screen.getByDisplayValue('Edited market')).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByRole('button', { name: 'Go back' }));
     expect(app.getPathname()).toBe('/home');
     expect(screen.getByRole('header', { name: 'Home dashboard' })).toBeOnTheScreen();
+  });
+
+  it('returns home with an expense-saved toast after a valid save', async () => {
+    const app = renderRouter('./src/app', { initialUrl: '/expenses/new' });
+    await app;
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Save expense' }));
+    expect(app.getPathname()).toBe('/home');
+    expect(screen.getByRole('alert', { name: 'Expense saved' })).toBeOnTheScreen();
+  });
+
+  it('supports editing and cancelling a date selection', async () => {
+    const app = renderRouter('./src/app', { initialUrl: '/expenses/new' });
+    await app;
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Date, Sep 22, 2026' }));
+    await fireEvent.changeText(screen.getByDisplayValue('2026-09-22'), '2026-10-03');
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancel date selection' }));
+    expect(screen.getByRole('button', { name: 'Date, Sep 22, 2026' })).toBeOnTheScreen();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'Date, Sep 22, 2026' }));
+    await fireEvent.changeText(screen.getByDisplayValue('2026-09-22'), '2026-10-03');
+    await fireEvent.press(screen.getByRole('button', { name: 'Apply date selection' }));
+    expect(screen.getByRole('button', { name: 'Date, Oct 3, 2026' })).toBeOnTheScreen();
   });
 
   it('opens the shared-expense flow from reports', async () => {
@@ -65,7 +118,7 @@ describe('app navigation', () => {
   });
 
   it.each([
-    { path: '/expenses/new', heading: 'KEEP TRACK OF THE EVERYDAY' },
+    { path: '/expenses/new', heading: 'Add expense' },
     { path: '/expenses/receipt-review', heading: 'CHECK THE DETAILS' },
     { path: '/split-budget', heading: 'SHARE THE COST' },
   ])('supports direct entry and a home fallback for $path', async ({ path, heading }) => {

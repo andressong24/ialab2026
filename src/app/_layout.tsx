@@ -1,23 +1,23 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Stack, usePathname, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import Head from 'expo-router/head';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet } from 'react-native';
 
 import { routes } from '@/navigation/routes';
+import { FinanceStoreProvider } from '@/state';
 import { theme } from '@/theme/tokens';
 
 export default function RootLayout() {
-  const pathname = usePathname();
   const router = useRouter();
 
   return (
-    <>
+    <FinanceStoreProvider>
       <Head>
         <title>IA Lab Finance</title>
         <meta name="description" content="Budget smarter, track expenses, and reach your goals — all in one place." />
       </Head>
-      <StatusBar style={pathname === '/' ? 'light' : 'dark'} />
+      <StatusBar style="dark" />
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: theme.colors.background },
@@ -54,7 +54,7 @@ export default function RootLayout() {
         <Stack.Screen name="split-budget" options={{ title: 'Split budget' }} />
         <Stack.Screen name="+not-found" options={{ title: 'Screen not found' }} />
       </Stack>
-    </>
+    </FinanceStoreProvider>
   );
 }
 
